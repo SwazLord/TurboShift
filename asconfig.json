@@ -3,10 +3,7 @@
     "compilerOptions": {
         "source-path": [
             "src",
-            "/Users/playkiamac/Projects/Starling-Framework/starling/src",
-            "/Users/playkiamac/Projects/starling-builder-engine/src",
-            "/Users/playkiamac/Projects/feathersui-starling/source",
-            "/Users/playkiamac/Projects/SoundAS/lib/src"
+            "code"
         ],
         "library-path": [
             "libs"
