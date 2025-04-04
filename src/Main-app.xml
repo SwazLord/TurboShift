@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<application xmlns="http://ns.adobe.com/air/application/51.1">
+	<id>com.gamua.turboshift</id>
+	<versionNumber>1.0.0</versionNumber>
+	<filename>TurboShift</filename>
+	<name>TurboShift</name>
+	<initialWindow>
+		<content>Main.swf</content>
+    	<depthAndStencil>true</depthAndStencil>
+    	<systemChrome>standard</systemChrome>
+    	<transparent>false</transparent>
+    	<visible>true</visible>
+    	<fullScreen>true</fullScreen>
+    	<autoOrients>true</autoOrients>
+    	<aspectRatio>any</aspectRatio>
+    	<renderMode>direct</renderMode>
+    	<requestedDisplayResolution>high</requestedDisplayResolution>
+	</initialWindow>
+</application>
