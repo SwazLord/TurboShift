@@ -1376,9 +1376,10 @@ package feathers.controls
 			{
 				processStyleRestriction(savedCallee);
 			}
-			if(value !== null)
+			var oldValue:TextFormat = this._fontStylesSet.format;
+			if(oldValue !== null)
 			{
-				value.removeEventListener(Event.CHANGE, changeHandler);
+				oldValue.removeEventListener(Event.CHANGE, changeHandler);
 			}
 			this._fontStylesSet.format = value;
 			if(value !== null)
@@ -1409,9 +1410,10 @@ package feathers.controls
 			{
 				processStyleRestriction(savedCallee);
 			}
-			if(value !== null)
+			var oldValue:TextFormat = this._fontStylesSet.disabledFormat;
+			if(oldValue !== null)
 			{
-				value.removeEventListener(Event.CHANGE, changeHandler);
+				oldValue.removeEventListener(Event.CHANGE, changeHandler);
 			}
 			this._fontStylesSet.disabledFormat = value;
 			if(value !== null)
@@ -1955,9 +1957,10 @@ package feathers.controls
 			{
 				processStyleRestriction(key);
 			}
-			if(format !== null)
+			var oldFormat:TextFormat = this._fontStylesSet.getFormatForState(state);
+			if(oldFormat !== null)
 			{
-				format.removeEventListener(Event.CHANGE, changeHandler);
+				oldFormat.removeEventListener(Event.CHANGE, changeHandler);
 			}
 			this._fontStylesSet.setFormatForState(state, format);
 			if(format !== null)

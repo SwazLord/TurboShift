@@ -688,10 +688,14 @@ package feathers.controls
 		{
 			if(starling in Toast._containers)
 			{
-				return DisplayObjectContainer(Toast._containers[starling]);
+				var container:DisplayObjectContainer = DisplayObjectContainer(Toast._containers[starling]);
+				// always move it to the top, so that new toasts don't appear
+				// behind other pop-ups added after the first toast
+				container.parent.setChildIndex(container, container.parent.numChildren - 1);
+				return container;
 			}
 			var factory:Function = Toast._containerFactory !== null ? Toast._containerFactory : defaultContainerFactory;
-			var container:DisplayObjectContainer = DisplayObjectContainer(factory());
+			container = DisplayObjectContainer(factory());
 			Toast._containers[starling] = container;
 			container.addEventListener(Event.REMOVED_FROM_STAGE, function(event:Event):void
 			{
@@ -1174,9 +1178,10 @@ package feathers.controls
 			{
 				processStyleRestriction(savedCallee);
 			}
-			if(value !== null)
+			var oldValue:TextFormat = this._fontStylesSet.format;
+			if(oldValue !== null)
 			{
-				value.removeEventListener(Event.CHANGE, changeHandler);
+				oldValue.removeEventListener(Event.CHANGE, changeHandler);
 			}
 			this._fontStylesSet.format = value;
 			if(value !== null)
@@ -1207,9 +1212,10 @@ package feathers.controls
 			{
 				processStyleRestriction(savedCallee);
 			}
-			if(value !== null)
+			var oldValue:TextFormat = this._fontStylesSet.disabledFormat;
+			if(oldValue !== null)
 			{
-				value.removeEventListener(Event.CHANGE, changeHandler);
+				oldValue.removeEventListener(Event.CHANGE, changeHandler);
 			}
 			this._fontStylesSet.disabledFormat = value;
 			if(value !== null)

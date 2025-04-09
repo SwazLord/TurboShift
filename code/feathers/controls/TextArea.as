@@ -476,6 +476,11 @@ package feathers.controls
 		 */
 		public static var globalStyleProvider:IStyleProvider;
 
+		private static function defaultErrorCalloutFactory():TextCallout
+		{
+			return new TextCallout();
+		}
+
 		/**
 		 * Constructor.
 		 */
@@ -978,9 +983,10 @@ package feathers.controls
 			{
 				processStyleRestriction(savedCallee);
 			}
-			if(value !== null)
+			var oldValue:TextFormat = this._fontStylesSet.format;
+			if(oldValue !== null)
 			{
-				value.removeEventListener(Event.CHANGE, changeHandler);
+				oldValue.removeEventListener(Event.CHANGE, changeHandler);
 			}
 			this._fontStylesSet.format = value;
 			if(value !== null)
@@ -1011,9 +1017,10 @@ package feathers.controls
 			{
 				processStyleRestriction(savedCallee);
 			}
-			if(value !== null)
+			var oldValue:TextFormat = this._fontStylesSet.disabledFormat;
+			if(oldValue !== null)
 			{
-				value.removeEventListener(Event.CHANGE, changeHandler);
+				oldValue.removeEventListener(Event.CHANGE, changeHandler);
 			}
 			this._fontStylesSet.disabledFormat = value;
 			if(value !== null)
@@ -1208,9 +1215,10 @@ package feathers.controls
 			{
 				processStyleRestriction(savedCallee);
 			}
-			if(value !== null)
+			var oldValue:TextFormat = this._promptFontStylesSet.format;
+			if(oldValue !== null)
 			{
-				value.removeEventListener(Event.CHANGE, changeHandler);
+				oldValue.removeEventListener(Event.CHANGE, changeHandler);
 			}
 			this._promptFontStylesSet.format = value;
 			if(value !== null)
@@ -1241,9 +1249,10 @@ package feathers.controls
 			{
 				processStyleRestriction(savedCallee);
 			}
-			if(value !== null)
+			var oldValue:TextFormat = this._promptFontStylesSet.disabledFormat;
+			if(oldValue !== null)
 			{
-				value.removeEventListener(Event.CHANGE, changeHandler);
+				oldValue.removeEventListener(Event.CHANGE, changeHandler);
 			}
 			this._promptFontStylesSet.disabledFormat = value;
 			if(value !== null)
@@ -1333,6 +1342,52 @@ package feathers.controls
 			}
 			this._customPromptStyleName = value;
 			this.invalidate(INVALIDATION_FLAG_TEXT_RENDERER);
+		}
+		
+		/**
+		 * @private
+		 */
+		protected var _errorCalloutFactory:Function;
+		
+		/**
+		 * A function used to instantiate the error text callout. If null,
+		 * <code>new TextCallout()</code> is used instead.
+		 * The error text callout must be an instance of
+		 * <code>TextCallout</code>. This factory can be used to change
+		 * properties on the callout when it is first created. For instance, if
+		 * you are skinning Feathers components without a theme, you might use
+		 * this factory to set styles on the callout.
+		 *
+		 * <p>The factory should have the following function signature:</p>
+		 * <pre>function():TextCallout</pre>
+		 *
+		 * <p>In the following example, a custom error callout factory is passed
+		 * to the text area:</p>
+		 *
+		 * <listing version="3.0">
+		 * textArea.errorCalloutFactory = function():TextCallout
+		 * {
+		 *     return new TextCallout();
+		 * };</listing>
+		 *
+		 * @default null
+		 *
+		 * @see #errorString
+		 * @see feathers.controls.TextCallout
+		 */
+		public function get errorCalloutFactory():Function
+		{
+			return this._errorCalloutFactory;
+		}
+		
+		public function set errorCalloutFactory(value:Function):void
+		{
+			if(this._errorCalloutFactory == value)
+			{
+				return;
+			}
+			this._errorCalloutFactory = value;
+			this.invalidate(INVALIDATION_FLAG_ERROR_CALLOUT_FACTORY);
 		}
 
 		/**
@@ -1691,9 +1746,10 @@ package feathers.controls
 			{
 				processStyleRestriction(key);
 			}
-			if(format !== null)
+			var oldFormat:TextFormat = this._fontStylesSet.getFormatForState(state);
+			if(oldFormat !== null)
 			{
-				format.removeEventListener(Event.CHANGE, changeHandler);
+				oldFormat.removeEventListener(Event.CHANGE, changeHandler);
 			}
 			this._fontStylesSet.setFormatForState(state, format);
 			if(format !== null)
@@ -1750,9 +1806,10 @@ package feathers.controls
 			{
 				processStyleRestriction(key);
 			}
-			if(format !== null)
+			var oldFormat:TextFormat = this._promptFontStylesSet.getFormatForState(state);
+			if(oldFormat !== null)
 			{
-				format.removeEventListener(Event.CHANGE, changeHandler);
+				oldFormat.removeEventListener(Event.CHANGE, changeHandler);
 			}
 			this._promptFontStylesSet.setFormatForState(state, format);
 			if(format !== null)
@@ -1968,7 +2025,8 @@ package feathers.controls
 			{
 				return;
 			}
-			this.callout = new TextCallout();
+ 			var factory:Function = this._errorCalloutFactory != null ? this._errorCalloutFactory : defaultErrorCalloutFactory;
+ 			this.callout = TextCallout(factory());
 			var errorCalloutStyleName:String = this._customErrorCalloutStyleName != null ? this._customErrorCalloutStyleName : this.errorCalloutStyleName;
 			this.callout.styleNameList.add(errorCalloutStyleName);
 			this.callout.closeOnKeys = null;

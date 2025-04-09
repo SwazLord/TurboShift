@@ -198,7 +198,10 @@ package feathers.motion.effectClasses
 		 */
 		public function set position(value:Number):void
 		{
-			if(value > MAX_POSITION)
+			// there are some quirks with Starling tweens where we want to avoid
+			// going all of the way to the end, unless the tween is currently
+			// playing
+			if(!this._playing && value > MAX_POSITION)
 			{
 				value = MAX_POSITION;
 			}
@@ -354,6 +357,7 @@ package feathers.motion.effectClasses
 		protected function playTween_onComplete():void
 		{
 			this._playTween = null;
+			this._playing = false;
 			this.cleanupEffect();
 			this.dispatchEventWith(Event.COMPLETE, false, false);
 		}

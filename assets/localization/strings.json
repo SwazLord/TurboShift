@@ -1,0 +1,67 @@
+{
+    "text_01": {
+        "en": "START",
+        "fr": "DÉMARRER",
+        "de": "STARTEN"
+    },
+    "text_02": {
+        "en": "BEST SCORE : ",
+        "fr": "MEILLEUR SCORE : ",
+        "de": "BESTE PUNKTZAHL : "
+    },
+    "text_03": {
+        "en": "POWERED BY",
+        "fr": "ALIMENTÉ PAR",
+        "de": "BETRIEBEN VON"
+    },
+    "text_04": {
+        "en": "AWESOME",
+        "fr": "GÉNIAL",
+        "de": "TOLL"
+    },
+    "text_05": {
+        "en": "SELECT LANGUAGE",
+        "fr": "SÉLECTIONNER LA LANGUE",
+        "de": "SPRACHE AUSWÄHLEN"
+    },
+    "text_06": {
+        "en": "ENGLISH",
+        "fr": "ANGLAIS",
+        "de": "ENGLISCH"
+    },
+    "text_07": {
+        "en": "FRENCH",
+        "fr": "FRANÇAIS",
+        "de": "FRANZÖSISCH"
+    },
+    "text_08": {
+        "en": "GERMAN",
+        "fr": "ALLEMAND",
+        "de": "DEUTSCH"
+    },
+    "text_09": {
+        "en": "LEADERBOARD",
+        "fr": "CLASSEMENT",
+        "de": "BESTENLISTE"
+    },
+    "text_10": {
+        "en": "SCORE :",
+        "fr": "SCORE :",
+        "de": "PUNKTZAHL :"
+    },
+    "text_11": {
+        "en": "ROUND OVER",
+        "fr": "MANCHE TERMINÉE",
+        "de": "RUNDE VORBEI"
+    },
+    "text_12": {
+        "en": "PLAY AGAIN",
+        "fr": "REJOUER",
+        "de": "NOCHMAL SPIELEN"
+    },
+    "text_13": {
+        "en": "QUIT",
+        "fr": "QUITTER",
+        "de": "BEENDEN"
+    }
+}

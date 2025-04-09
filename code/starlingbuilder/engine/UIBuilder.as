@@ -140,7 +140,7 @@ package starlingbuilder.engine
             if (binder)
                 bind(binder, paramsDict);
 
-            return {object:root, params:paramsDict, data:data};
+            return {object: root, params: paramsDict, data: data};
         }
 
         private function loadTree(data:Object, factory:UIElementFactory, paramsDict:Dictionary):DisplayObject
@@ -299,11 +299,11 @@ package starlingbuilder.engine
         }
 
         private static const RESOURCE_CLASSES:Array = ["XML", "Object", "feathers.data.ListCollection", "feathers.data.HierarchicalCollection",
-            "feathers.data.ArrayHierarchicalCollection", "feathers.data.ArrayCollection"];
+                "feathers.data.ArrayHierarchicalCollection", "feathers.data.ArrayCollection"];
 
         private function saveElement(obj:Object, params:Array, paramsData:Object):Object
         {
-            var item:Object = {params:{}, constructorParams:[], customParams:{}};
+            var item:Object = {params: {}, constructorParams: [], customParams: {}};
 
             item.cls = ParamUtil.getClassName(obj);
 
@@ -311,7 +311,8 @@ package starlingbuilder.engine
             {
                 item.constructorParams = cloneObject(paramsData.constructorParams);
                 item.customParams = cloneObject(paramsData.customParams);
-                if (paramsData.tweenData) item.tweenData = cloneObject(paramsData.tweenData);
+                if (paramsData.tweenData)
+                    item.tweenData = cloneObject(paramsData.tweenData);
                 removeDefault(item, ParamUtil.getCustomParams(_template));
             }
 
@@ -321,14 +322,15 @@ package starlingbuilder.engine
                 {
                     if (param.hasOwnProperty("cls"))
                     {
-                        if (obj[param.name] is Texture || RESOURCE_CLASSES.indexOf(ParamUtil.getClassName(obj[param.name])) != -1)   //special case for saving texture
+                        if (obj[param.name] is Texture || RESOURCE_CLASSES.indexOf(ParamUtil.getClassName(obj[param.name])) != -1) // special case for saving texture
                         {
                             item.params[param.name] = cloneObject(paramsData.params[param.name]);
                         }
                         else
                         {
                             var subObject:Object = obj[param.name];
-                            if (subObject) item.params[param.name] = saveElement(subObject, ParamUtil.getParams(_template, subObject), cloneObject(paramsData.params[param.name]));
+                            if (subObject)
+                                item.params[param.name] = saveElement(subObject, ParamUtil.getParams(_template, subObject), cloneObject(paramsData.params[param.name]));
                         }
                     }
                     else
@@ -361,7 +363,7 @@ package starlingbuilder.engine
         {
             for each (var param:Object in params)
             {
-                if (ObjectLocaterUtil.get(obj, param.name) == param.default_value)
+                if (ObjectLocaterUtil.get (obj, param.name) == param.default_value)
                 {
                     ObjectLocaterUtil.del(obj, param.name);
                 }
@@ -375,7 +377,7 @@ package starlingbuilder.engine
                 return false;
             }
 
-            //Won't save default NaN value, plus it's not supported in json format
+            // Won't save default NaN value, plus it's not supported in json format
             if (param.default_value == "NaN" && isNaN(obj[param.name]))
             {
                 return false;
@@ -392,7 +394,7 @@ package starlingbuilder.engine
                 return false;
             }
 
-            //Custom save rules go to here
+            // Custom save rules go to here
             if (!SaveUtil.willSave(obj, param, item))
             {
                 return false;
@@ -442,7 +444,7 @@ package starlingbuilder.engine
             var clone:ByteArray = new ByteArray();
             clone.writeObject(object);
             clone.position = 0;
-            return(clone.readObject());
+            return (clone.readObject());
         }
 
         /**
@@ -450,7 +452,7 @@ package starlingbuilder.engine
          */
         public function createUIElement(data:Object):Object
         {
-            return {object:_factory.create(data), params:data};
+            return {object: _factory.create(data), params: data};
         }
 
         /**
@@ -496,10 +498,13 @@ package starlingbuilder.engine
             if (params && params.customParams && params.customParams.localizeKey)
             {
                 var text:String = _localization.getLocalizedText(params.customParams.localizeKey);
-                if (text == null) text = params.customParams.localizeKey;
+                if (text == null)
+                    text = params.customParams.localizeKey;
 
-                if (object.hasOwnProperty("text")) object["text"] = text;
-                if (object.hasOwnProperty("label")) object["label"] = text;
+                if (object.hasOwnProperty("text"))
+                    object["text"] = text;
+                if (object.hasOwnProperty("label"))
+                    object["label"] = text;
 
                 if (_localizationHandler)
                     _localizationHandler.localize(object, text, paramsDict, _localization.locale);
@@ -510,7 +515,7 @@ package starlingbuilder.engine
             if (container)
             {
                 var dict:Dictionary;
-                
+
                 if (params && params.externalParams)
                 {
                     dict = params.externalParams;
@@ -580,7 +585,7 @@ package starlingbuilder.engine
          */
         public function get displayObjectHandler():IDisplayObjectHandler
         {
-            return _displayObjectHandler
+            return _displayObjectHandler;
         }
 
         /**
@@ -621,7 +626,8 @@ package starlingbuilder.engine
 
             for each (var name:String in array)
             {
-                if (container == null) return null;
+                if (container == null)
+                    return null;
 
                 obj = container.getChildByName(name);
                 container = obj as DisplayObjectContainer;
@@ -656,11 +662,19 @@ package starlingbuilder.engine
                 if (name && name.charAt(0) == "_")
                 {
                     if (name in view)
+                    {
                         view[name] = obj;
-                        if(obj is ICustomClass) //if class is of interface ICustomClass then call init()
-                            view[name].init();
+                        // if object is of interface ICustomComponent then call initComponent()
+                        if (obj is ICustomComponent)
+                        {
+                            view[name].initComponent();
+                        }
+                    }
                     else
+                    {
                         throw new Error("Property " + name + " not defined in " + getQualifiedClassName(view));
+                    }
+
                 }
             }
         }
