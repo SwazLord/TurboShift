@@ -47,13 +47,18 @@
         ],
         "customParams":{},
         "params":{
-          "color":2894892,
+          "color":459264,
           "name":null,
           "scaleX":12.8,
           "scaleY":19.2
         }
       },
       "height":960,
+      "layout":{
+        "cls":"feathers.layout.AnchorLayout",
+        "customParams":{},
+        "params":{}
+      },
       "layoutData":{
         "cls":"feathers.layout.AnchorLayoutData",
         "customParams":{},
@@ -67,7 +72,7 @@
     }
   },
   "setting":{
-    "canvasColor":266,
+    "canvasColor":16776701,
     "canvasSize":{
       "x":640,
       "y":960

@@ -13,11 +13,7 @@
             ],
             "customParams":{},
             "params":{
-              "name":"turbo_shift",
-              "pivotX":271,
-              "pivotY":55,
-              "x":320,
-              "y":55
+              "name":"turbo_shift"
             }
           },
           {
@@ -32,10 +28,12 @@
               "localizeKey":"text_01"
             },
             "params":{
-              "height":101,
+              "downState":{
+                "cls":"starling.textures.Texture",
+                "textureName":"button_down"
+              },
+              "height":100,
               "name":"_start_button",
-              "pivotX":125,
-              "pivotY":50.5,
               "scale9Grid":{
                 "cls":"flash.geom.Rectangle",
                 "customParams":{},
@@ -52,14 +50,14 @@
                 "constructorParams":[],
                 "customParams":{},
                 "params":{
-                  "color":16777215,
-                  "font":"lilita_one",
+                  "color":16711673,
+                  "font":"lilitaone",
                   "size":40
                 }
               },
               "width":250,
-              "x":320,
-              "y":231
+              "x":146,
+              "y":150
             }
           },
           {
@@ -79,29 +77,90 @@
               "localizeKey":"text_02"
             },
             "params":{
+              "autoScale":true,
+              "batchable":true,
               "format":{
                 "cls":"starling.text.TextFormat",
                 "customParams":{},
                 "params":{
                   "color":16777215,
-                  "font":"lilita_one",
+                  "font":"lilitaone",
                   "size":40
                 }
               },
-              "height":100,
+              "height":50,
               "name":"_best_score_text",
-              "pivotX":250,
-              "pivotY":50,
-              "width":500,
-              "x":320,
-              "y":402
+              "width":400,
+              "x":71,
+              "y":290
+            }
+          },
+          {
+            "cls":"starling.text.TextField",
+            "constructorParams":[
+              {
+                "value":200
+              },
+              {
+                "value":100
+              },
+              {
+                "value":""
+              }
+            ],
+            "customParams":{
+              "localizeKey":"text_03"
+            },
+            "params":{
+              "autoScale":true,
+              "batchable":true,
+              "format":{
+                "cls":"starling.text.TextFormat",
+                "customParams":{},
+                "params":{
+                  "color":16777215,
+                  "font":"lilitaone",
+                  "size":30
+                }
+              },
+              "height":50,
+              "name":"lilitaone",
+              "width":350,
+              "x":96,
+              "y":380
+            }
+          },
+          {
+            "cls":"starling.display.MovieClip",
+            "constructorParams":[
+              {
+                "cls":"__AS3__.vec.Vector.<starling.textures.Texture>",
+                "label":"prefix",
+                "name":"textures",
+                "value":"bird_"
+              }
+            ],
+            "customParams":{},
+            "params":{
+              "currentFrame":4,
+              "name":"_bird_mc",
+              "x":221,
+              "y":470
             }
           }
         ],
         "cls":"feathers.controls.LayoutGroup",
         "customParams":{},
         "params":{
-          "height":450,
+          "layout":{
+            "cls":"feathers.layout.VerticalLayout",
+            "customParams":{},
+            "params":{
+              "gap":40,
+              "horizontalAlign":"center",
+              "verticalAlign":"middle"
+            }
+          },
           "layoutData":{
             "cls":"feathers.layout.AnchorLayoutData",
             "customParams":{},
@@ -111,8 +170,48 @@
             }
           },
           "name":"center_layout",
-          "width":640,
-          "y":255
+          "x":49,
+          "y":198
+        }
+      },
+      {
+        "children":[
+          {
+            "cls":"starling.display.Button",
+            "constructorParams":[
+              {
+                "cls":"starling.textures.Texture",
+                "textureName":"leaderboard_icon"
+              }
+            ],
+            "customParams":{},
+            "params":{
+              "height":71,
+              "name":"_leaderboard_button",
+              "textFormat":{
+                "cls":"starling.text.TextFormat",
+                "constructorParams":[],
+                "customParams":{},
+                "params":{}
+              },
+              "width":69
+            }
+          }
+        ],
+        "cls":"feathers.controls.LayoutGroup",
+        "customParams":{},
+        "params":{
+          "layoutData":{
+            "cls":"feathers.layout.AnchorLayoutData",
+            "customParams":{},
+            "params":{
+              "bottom":5,
+              "right":5
+            }
+          },
+          "name":"botom_right_layout",
+          "x":566,
+          "y":884
         }
       },
       {
@@ -183,10 +282,8 @@
                         },
                         "params":{
                           "name":"_bgm_sprite",
-                          "pivotX":24,
-                          "pivotY":24,
-                          "x":35,
-                          "y":70
+                          "x":11,
+                          "y":46
                         }
                       },
                       {
@@ -201,7 +298,7 @@
                             ],
                             "customParams":{},
                             "params":{
-                              "name":"sfx_ icon"
+                              "name":"bgm_ icon"
                             }
                           },
                           {
@@ -224,10 +321,8 @@
                         },
                         "params":{
                           "name":"_sfx_sprite",
-                          "pivotX":24,
-                          "pivotY":24,
-                          "x":35,
-                          "y":138
+                          "x":11,
+                          "y":114
                         }
                       },
                       {
@@ -267,7 +362,7 @@
                           "verticalAlign":"bottom"
                         }
                       },
-                      "name":"layoutGroup",
+                      "name":"buttons_layout",
                       "width":70
                     }
                   }
@@ -276,7 +371,7 @@
                 "customParams":{},
                 "params":{
                   "name":"_settings_drop_down",
-                  "y":70
+                  "y":50
                 }
               }
             ],
@@ -305,7 +400,7 @@
                     }
                   },
                   "scaleX":1.09,
-                  "scaleY":4.92,
+                  "scaleY":5.16,
                   "y":30
                 }
               },
@@ -324,14 +419,13 @@
             "params":{
               "height":71,
               "name":"_settings_button",
-              "scaleWhenDown":0.98,
               "textFormat":{
                 "cls":"starling.text.TextFormat",
                 "constructorParams":[],
                 "customParams":{},
                 "params":{}
               },
-              "width":69
+              "width":71
             }
           }
         ],
@@ -347,90 +441,8 @@
             }
           },
           "name":"top_right_layout",
-          "x":565,
+          "x":564,
           "y":5
-        }
-      },
-      {
-        "children":[
-          {
-            "cls":"starling.display.Button",
-            "constructorParams":[
-              {
-                "cls":"starling.textures.Texture",
-                "textureName":"leaderboard_icon"
-              }
-            ],
-            "customParams":{},
-            "params":{
-              "height":71,
-              "name":"_leaderboard_button",
-              "scaleWhenDown":0.98,
-              "textFormat":{
-                "cls":"starling.text.TextFormat",
-                "constructorParams":[],
-                "customParams":{},
-                "params":{}
-              },
-              "width":69
-            }
-          }
-        ],
-        "cls":"feathers.controls.LayoutGroup",
-        "customParams":{},
-        "params":{
-          "layoutData":{
-            "cls":"feathers.layout.AnchorLayoutData",
-            "customParams":{},
-            "params":{
-              "bottom":5,
-              "right":5
-            }
-          },
-          "name":"bottom_right_layout",
-          "x":566,
-          "y":884
-        }
-      },
-      {
-        "children":[
-          {
-            "cls":"starling.display.Button",
-            "constructorParams":[
-              {
-                "cls":"starling.textures.Texture",
-                "textureName":"language_icon"
-              }
-            ],
-            "customParams":{},
-            "params":{
-              "height":71,
-              "name":"_language_button",
-              "scaleWhenDown":0.98,
-              "textFormat":{
-                "cls":"starling.text.TextFormat",
-                "constructorParams":[],
-                "customParams":{},
-                "params":{}
-              },
-              "width":69
-            }
-          }
-        ],
-        "cls":"feathers.controls.LayoutGroup",
-        "customParams":{},
-        "params":{
-          "layoutData":{
-            "cls":"feathers.layout.AnchorLayoutData",
-            "customParams":{},
-            "params":{
-              "bottom":5,
-              "left":5
-            }
-          },
-          "name":"bottom_left_layout",
-          "x":5,
-          "y":884
         }
       }
     ],
@@ -453,10 +465,7 @@
           "tileGrid":{
             "cls":"flash.geom.Rectangle",
             "customParams":{},
-            "params":{
-              "height":64,
-              "width":64
-            }
+            "params":{}
           }
         }
       },
@@ -474,7 +483,7 @@
           "percentWidth":100
         }
       },
-      "name":"root",
+      "name":"_root_layout",
       "width":640
     }
   },

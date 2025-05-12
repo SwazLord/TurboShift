@@ -5,63 +5,59 @@ package
     import com.funkypandagame.stardustplayer.SimLoader;
     import com.funkypandagame.stardustplayer.project.ProjectValueObject;
     import flash.events.Event;
-    import starling.events.EnterFrameEvent;
     import starling.events.Event;
+    import starling.events.EnterFrameEvent;
 
     public class BigExplosion extends Sprite
     {
-        private var simContainer:Sprite;
-        private var player:SimPlayer;
-        private var loader:SimLoader;
-        private var project:ProjectValueObject;
+        private var _sim_container:Sprite;
+        private var _player:SimPlayer;
+        private var _loader:SimLoader;
+        private var _project:ProjectValueObject;
         public function BigExplosion()
         {
-            simContainer = new Sprite();
-            simContainer.touchable = false;
-            addChild(simContainer);
+            _sim_container = new Sprite();
+            addChild(_sim_container);
 
-            loader = new SimLoader();
-            loader.addEventListener(flash.events.Event.COMPLETE, onSimLoaded);
-            loader.loadSim(Game.current_instance._asst_manager.getByteArray("bigExplosion"));
+            _loader = new SimLoader();
+            _loader.addEventListener(flash.events.Event.COMPLETE, onSimulationLoaded);
+            _loader.loadSim(TurboShift.root.asset_manager.getByteArray("bigExplosion"));
 
-            player = new SimPlayer();
+            _player = new SimPlayer();
         }
 
-        private function onSimLoaded(event:Object):void
+        private function onSimulationLoaded(event:Object):void
         {
-            loader.removeEventListener(flash.events.Event.COMPLETE, onSimLoaded);
-            project = loader.createProjectInstance();
-            player.setProject(project);
-            player.setRenderTarget(simContainer);
+            _loader.removeEventListener(flash.events.Event.COMPLETE, onSimulationLoaded);
+            _project = _loader.createProjectInstance();
+            _player.setProject(_project);
+            _player.setRenderTarget(_sim_container);
         }
 
         public function play():void
         {
             addEventListener(starling.events.Event.ENTER_FRAME, onEnterFrame);
-            project.resetSimulation();
-
+            _project.resetSimulation();
         }
 
         private function onEnterFrame(event:EnterFrameEvent):void
         {
-            player.stepSimulation(event.passedTime);
-            if (project.numberOfParticles == 0)
+            _player.stepSimulation(event.passedTime);
+            if (_project.numberOfParticles == 0)
             {
-                removeEventListener(flash.events.Event.ENTER_FRAME, onEnterFrame);
-
+                removeEventListener(starling.events.Event.ENTER_FRAME, onEnterFrame);
             }
         }
 
         public function destroy():void
         {
-            player = null;
-            project.destroy();
-            project = null;
-            loader.dispose();
-            loader = null;
-            simContainer.removeFromParent(true);
-            simContainer = null;
-            this.removeFromParent(true);
+            _player = null;
+            _project.destroy();
+            _project = null;
+            _loader.dispose();
+            _loader = null;
+            _sim_container.removeFromParent(true);
+            _sim_container = null;
         }
     }
 }

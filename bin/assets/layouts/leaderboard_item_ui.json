@@ -22,8 +22,8 @@
             "cls":"starling.text.TextFormat",
             "customParams":{},
             "params":{
-              "color":16463826,
-              "font":"lilita_one",
+              "color":15216318,
+              "font":"lilitaone",
               "size":30
             }
           },
@@ -56,8 +56,8 @@
             "cls":"starling.text.TextFormat",
             "customParams":{},
             "params":{
-              "color":5501432,
-              "font":"lilita_one",
+              "color":4845820,
+              "font":"lilitaone",
               "size":30
             }
           },
@@ -90,14 +90,14 @@
             "cls":"starling.text.TextFormat",
             "customParams":{},
             "params":{
-              "color":16776531,
-              "font":"lilita_one",
+              "color":16775426,
+              "font":"lilitaone",
               "size":30
             }
           },
           "height":50,
           "name":"_score_text",
-          "text":"99999",
+          "text":"9999999",
           "width":100,
           "x":285,
           "y":15
@@ -122,7 +122,7 @@
             "cls":"flash.geom.Rectangle",
             "customParams":{},
             "params":{
-              "height":12,
+              "height":21,
               "width":51,
               "x":38,
               "y":16
@@ -138,6 +138,7 @@
         "customParams":{},
         "params":{
           "gap":10,
+          "horizontalAlign":"center",
           "padding":15,
           "verticalAlign":"middle"
         }

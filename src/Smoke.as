@@ -8,20 +8,20 @@ package
     import starling.events.Event;
     import starling.events.EnterFrameEvent;
 
-    public class BlazingFire extends Sprite
+    public class Smoke extends Sprite
     {
         private var _sim_container:Sprite;
         private var _player:SimPlayer;
         private var _loader:SimLoader;
         private var _project:ProjectValueObject;
-        public function BlazingFire()
+        public function Smoke()
         {
             _sim_container = new Sprite();
             addChild(_sim_container);
 
             _loader = new SimLoader();
             _loader.addEventListener(flash.events.Event.COMPLETE, onSimulationLoaded);
-            _loader.loadSim(TurboShift.root.asset_manager.getByteArray("blazingFire"));
+            _loader.loadSim(TurboShift.root.asset_manager.getByteArray("smoke"));
 
             _player = new SimPlayer();
         }
@@ -43,7 +43,7 @@ package
 
         public function destroy():void
         {
-             removeEventListener(starling.events.Event.ENTER_FRAME, onEnterFrame);
+            removeEventListener(starling.events.Event.ENTER_FRAME, onEnterFrame);
             _player = null;
             _project.destroy();
             _project = null;

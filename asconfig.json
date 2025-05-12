@@ -1,28 +1,37 @@
 {
-    "config": "air",
-    "compilerOptions": {
-        "source-path": [
-            "src",
-            "code"
-        ],
-        "library-path": [
-            "libs"
-        ],
-        "output": "bin/Main.swf"
-    },
-    "mainClass": "Main",
-    "application": "src/Main-app.xml",
-    "airOptions": {
-        "files": [
-            {
-                "file": "assets",
-                "path": "assets"
-            }
-        ],
-        "output": "bin/Main.air",
-        "signingOptions": {
-            "storetype": "pkcs12",
-            "keystore": "files/certificate.p12"
-        }
-    }
+	"config": "air",
+	"compilerOptions": {
+		"source-path": [
+			"src",
+			"code"
+		],
+		"library-path": ["libs"],
+		"output": "bin/TurboShift.swf"
+	},
+	"mainClass": "TurboShift",
+	"application": "src/TurboShift-app.xml",
+	"airOptions": {
+		"files": [{
+			"file": "assets",
+			"path": "assets"
+		},
+		{
+			"file": "icons/icon48.png",
+			"path": "icon48.png"
+		},
+		{
+			"file": "icons/icon128.png",
+			"path": "icon128.png"
+		},
+		{
+			"file": "icons/icon512.png",
+			"path": "icon512.png"
+		}],
+		"output": "bin/TurboShift.air",
+	"signingOptions": {
+		"storetype": "pkcs12",
+		"keystore": "cert/certificate.p12",
+		"tsa": "none"
+	}
+	}
 }

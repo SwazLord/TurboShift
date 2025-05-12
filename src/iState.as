@@ -2,7 +2,7 @@ package
 {
     public interface iState
     {
-        function update():void;
+        function update(timePassed:Number):void;
         function destroy():void;
     }
 }

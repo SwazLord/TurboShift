@@ -1,6 +1,5 @@
 package
 {
-
     import starling.animation.Transitions;
 
     public class Animations

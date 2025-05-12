@@ -50,9 +50,9 @@
         "de": "PUNKTZAHL :"
     },
     "text_11": {
-        "en": "ROUND OVER",
-        "fr": "MANCHE TERMINÉE",
-        "de": "RUNDE VORBEI"
+        "en": "GAME OVER",
+        "fr": "FIN DE JEU",
+        "de": "SPIEL VORBEI"
     },
     "text_12": {
         "en": "PLAY AGAIN",
@@ -63,5 +63,15 @@
         "en": "QUIT",
         "fr": "QUITTER",
         "de": "BEENDEN"
+    },
+    "text_14": {
+        "en": "YOUR SCORE",
+        "fr": "VOTRE SCORE",
+        "de": "IHRE PUNKTZAHL"
+    },
+    "text_15": {
+        "en": "YOU",
+        "fr": "VOUS",
+        "de": "DU"
     }
 }

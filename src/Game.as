@@ -5,180 +5,224 @@ package
     import starlingbuilder.engine.UIBuilder;
     import starlingbuilder.engine.DefaultAssetMediator;
     import feathers.controls.LayoutGroup;
-    import starling.display.Image;
     import feathers.layout.AnchorLayout;
-    import starlingbuilder.engine.LayoutLoader;
+    import starling.display.Button;
+    import starling.events.Event;
+    import starling.events.EnterFrameEvent;
     import flash.net.SharedObject;
+    import feathers.layout.VerticalLayout;
+    import feathers.layout.HorizontalLayout;
     import treefortress.sound.SoundManager;
-    import starlingbuilder.engine.localization.ILocalization;
     import flash.system.Capabilities;
+    import starlingbuilder.engine.localization.ILocalization;
     import starlingbuilder.engine.localization.DefaultLocalization;
 
     public class Game extends Sprite
     {
-        public var _asst_manager:AssetManager;
-        public var _ui_builder:UIBuilder;
-        private var _asst_mediator:DefaultAssetMediator;
-        public static const linkers:Array = [LayoutGroup, Image, AnchorLayout];
-        public var _current_state:iState;
-        public static var current_instance:Game;
-        private var _layout_loader:LayoutLoader;
-        private var _sharedObject:SharedObject;
-        private var _topScore:uint;
-        public var _bgmPlayer:SoundManager = new SoundManager();
-        public var _sfxPlayer:SoundManager = new SoundManager();
-        private var _bgm_muted:Boolean;
-        private var _sfx_muted:Boolean;
-        private var _localization:ILocalization;
-        private var _locale:String;
-        private const SUPPORTED_LOCALES:Array = ["en", "fr", "de"];
-        public function Game()
+        public static var linkers:Array = [AnchorLayout, VerticalLayout, HorizontalLayout];
+        private var _asset_manager:AssetManager;
+
+        public function get asset_manager():AssetManager
         {
-            trace("game class contructor");
-            _sharedObject = SharedObject.getLocal("turbo-shift-data");
-            current_instance = this;
-            Animations.registerTransitions();
+            return _asset_manager;
         }
+        private var _curent_state:iState;
 
-        public function startGame():void
+        public function get curent_state():iState
         {
-            trace("start Game");
-            _asst_manager = new AssetManager();
-            _asst_manager.enqueue([
-                        "assets/textures/texture.png",
-                        "assets/textures/texture.xml",
-                        "assets/textures/lilita_one.fnt",
-                        "assets/backgrounds/road_tile.png",
-                        "assets/particles/bigExplosion.sde",
-                        "assets/particles/blazingFire.sde",
-                        "assets/particles/pinkSmoke.sde",
-                        "assets/localization/strings.json"
-                    ]);
-            _asst_manager.loadQueue(onComplete, onError, onProgress);
-
-            _bgmPlayer.loadSound("assets/sounds/game_loop.mp3", "game_loop");
-            _sfxPlayer.loadSound("assets/sounds/button_click.mp3", "button_click");
+            return _curent_state;
         }
+        private var _ui_builder:UIBuilder;
 
-        private function onComplete():void
+        public function get ui_builder():UIBuilder
         {
-            trace("ASSET LOADED");
-            _localization = new DefaultLocalization(_asst_manager.getObject("strings"), locale);
-            _layout_loader = new LayoutLoader(EmbeddedLayouts, ParsedLayouts);
-            _asst_mediator = new DefaultAssetMediator(_asst_manager);
-            _ui_builder = new UIBuilder(_asst_mediator, false, null, _localization);
-            _bgmPlayer.mute = bgm_muted;
-            _sfxPlayer.mute = sfx_muted;
-            changeState(0);
+            return _ui_builder;
         }
+        private var _asset_mediator:DefaultAssetMediator;
+        private var _best_score:uint;
 
-        private function onError(error:String):void
+        public function get best_score():uint
         {
-            trace("ERROR : " + error);
-        }
-
-        private function onProgress(ratio:Number):void
-        {
-            trace("PROGRESS : " + ratio);
-        }
-
-        public function changeState(state:uint):void
-        {
-            if (_current_state != null)
-            {
-                _current_state.destroy();
-                _current_state = null;
-            }
-
-            switch (state)
-            {
-                case 0:
-                    _bgmPlayer.playLoop("game_loop", 0);
-                    _bgmPlayer.getSound("game_loop").fadeFrom(0, 1, 3000);
-                    _current_state = new Lobby();
-                    break;
-                case 1:
-                    _current_state = new RaceGame();
-                    break;
-            }
-
-            addChild(_current_state as Sprite);
-
-        }
-
-        public function get topScore():uint
-        {
-            if (_sharedObject.data.topScore == null)
+            if (_shared_object.data.bestScore == null)
             {
                 return 0;
             }
             else
             {
-                return int(_sharedObject.data.topScore);
+                return int(_shared_object.data.bestScore);
             }
         }
 
-        public function set topScore(value:uint):void
+        public function set best_score(value:uint):void
         {
-            _sharedObject.setProperty("topScore", value);
-            _sharedObject.flush();
+            _shared_object.setProperty("bestScore", value);
+            _shared_object.flush();
         }
+        private var _shared_object:SharedObject;
+        private var _bgm_player:SoundManager;
+
+        public function get bgm_player():SoundManager
+        {
+            return _bgm_player;
+        }
+        private var _sfx_player:SoundManager;
+
+        public function get sfx_player():SoundManager
+        {
+            return _sfx_player;
+        }
+
+        private var _bgm_muted:Boolean;
 
         public function get bgm_muted():Boolean
         {
-            if (_sharedObject.data.bgm_muted == null)
+            if (_shared_object.data.bgm_muted == null)
             {
                 return false;
             }
             else
             {
-                return _sharedObject.data.bgm_muted;
+                return _shared_object.data.bgm_muted;
             }
         }
 
         public function set bgm_muted(value:Boolean):void
         {
-            _bgmPlayer.mute = value;
-            _sharedObject.setProperty("bgm_muted", value);
-            _sharedObject.flush();
+            _bgm_player.mute = value;
+            _shared_object.setProperty("bgm_muted", value);
+            _shared_object.flush();
+
         }
+        private var _sfx_muted:Boolean;
 
         public function get sfx_muted():Boolean
         {
-            if (_sharedObject.data.sfx_muted == null)
+            if (_shared_object.data.sfx_muted == null)
             {
                 return false;
             }
             else
             {
-                return _sharedObject.data.sfx_muted;
+                return _shared_object.data.sfx_muted;
             }
         }
 
         public function set sfx_muted(value:Boolean):void
         {
-            _sfxPlayer.mute = value;
-            _sharedObject.setProperty("sfx_muted", value);
-            _sharedObject.flush();
+            _sfx_player.mute = value;
+            _shared_object.setProperty("sfx_muted", value);
+            _shared_object.flush();
         }
+        private var _locale:String;
 
         public function get locale():String
         {
             if (SUPPORTED_LOCALES.indexOf(Capabilities.language) != -1)
             {
-                return Capabilities.language; // return set device language
+                return Capabilities.language;
             }
             else
             {
-                return "en"; // return english
+                return "en";
             }
+
         }
 
         public function set locale(value:String):void
         {
-
             _localization.locale = _locale = value;
-            _current_state.update();
+            if (_curent_state != null)
+            {
+                (_curent_state as Lobby).localize();
+            }
+
+        }
+        private var _localization:ILocalization;
+        private const SUPPORTED_LOCALES:Array = ["en", "fr", "de"];
+        public function Game()
+        {
+            trace("Root game instance created");
+            Animations.registerTransitions();
+            _shared_object = SharedObject.getLocal("turbo-shift-gamedata-test");
+            _bgm_player = new SoundManager();
+            _sfx_player = new SoundManager();
+            _asset_manager = new AssetManager();
+            _asset_manager.enqueue([
+                        "assets/backgrounds/road_tile.png",
+                        "assets/textures/texture.png",
+                        "assets/textures/texture.xml",
+                        "assets/textures/LilitaOne.fnt",
+                        "assets/layouts/lobby_ui.json",
+                        "assets/layouts/road_ui.json",
+                        "assets/layouts/race_ui.json",
+                        "assets/layouts/round_over_ui.json",
+                        "assets/layouts/leaderboard_ui.json",
+                        "assets/layouts/leaderboard_item_ui.json",
+                        "assets/layouts/languages_ui.json",
+                        "assets/particles/bigExplosion.sde",
+                        "assets/particles/blazingFire.sde",
+                        "assets/particles/smoke.sde",
+                        "assets/localization/strings.json"
+                    ]);
+
+            _asset_manager.loadQueue(onComplete, onError, onProgress);
+
+            bgm_player.loadSound("assets/sounds/game_loop.mp3", "game_loop");
+            sfx_player.loadSound("assets/sounds/button_click.mp3", "button_click");
+        }
+
+        private function onComplete():void
+        {
+            trace("assets loading complete");
+            _localization = new DefaultLocalization(asset_manager.getObject("strings"), locale);
+            _asset_mediator = new DefaultAssetMediator(_asset_manager);
+            _ui_builder = new UIBuilder(_asset_mediator, false, null, _localization);
+            bgm_player.mute = bgm_muted;
+            sfx_player.mute = sfx_muted;
+            changeState(0);
+        }
+
+        private function onError(error:Error):void
+        {
+            trace("assets loading failed " + error);
+        }
+
+        private function onProgress(ratio:Number):void
+        {
+            trace("assets loading : " + ratio + "%");
+        }
+
+        public function changeState(state:int):void
+        {
+            if (curent_state != null)
+            {
+                removeEventListener(Event.ENTER_FRAME, onEnterFrame);
+                curent_state.destroy();
+                _curent_state = null;
+            }
+
+            switch (state)
+            {
+                case 0:
+                    bgm_player.playLoop("game_loop", 0);
+                    bgm_player.getSound("game_loop").fadeFrom(0, 1, 3000);
+                    _curent_state = new Lobby();
+
+                    break;
+
+                case 1:
+                    _curent_state = new Race();
+
+                    break;
+            }
+
+            addChild(_curent_state as Sprite);
+            addEventListener(Event.ENTER_FRAME, onEnterFrame);
+        }
+
+        private function onEnterFrame(event:EnterFrameEvent):void
+        {
+            curent_state.update(event.passedTime);
         }
     }
 }
