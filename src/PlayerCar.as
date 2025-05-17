@@ -11,7 +11,6 @@ package
         private var _damaged_filter:SineWaveFilter;
         private var _blazing_fire:BlazingFire;
         private var player_car:Image;
-        public function PlayerCar();
 
         public function initComponent():void
         {
